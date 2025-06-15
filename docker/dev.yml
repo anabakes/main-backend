@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/anabakes
+      - SPRING_DATASOURCE_USERNAME=anabakes_user
+      - SPRING_DATASOURCE_PASSWORD=anabakes_pass
+    networks:
+      - anabakes-net
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: anabakes
+      POSTGRES_USER: anabakes_user
+      POSTGRES_PASSWORD: anabakes_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - anabakes-net
+
+volumes:
+  pgdata:
+
+networks:
+  anabakes-net:
