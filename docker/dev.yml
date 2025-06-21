@@ -8,15 +8,15 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      - postgres
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/anabakes
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/anabakes
       - SPRING_DATASOURCE_USERNAME=anabakes_user
       - SPRING_DATASOURCE_PASSWORD=anabakes_pass
     networks:
       - anabakes-net
 
-  db:
+  postgres:
     image: postgres:13
     environment:
       POSTGRES_DB: anabakes
